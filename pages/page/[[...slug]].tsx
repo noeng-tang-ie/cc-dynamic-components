@@ -26,11 +26,12 @@ export default function Page() {
         } else {
             item = await util.curlApiPage('home') as any
         }
-        console.log(slug?.[0])
-        setSections(JSON.stringify(item))
+        if(!item.length){
+            router.push('/404')
+        }
         for (const page of item) {
             let sections = page.sections?.map((value : any)=>(
-                BasePage(value.view)
+                BasePage(value.view, value)
             ))
             setSections(sections)
         }
